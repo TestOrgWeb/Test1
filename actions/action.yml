@@ -1,0 +1,12 @@
+name: Backporting meta-data
+description: Inputs and outputs for the backporting action
+inputs:
+  branchName:  # id of input
+    description: 'Branch you want to backport to'
+    required: true
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.branchName }}
