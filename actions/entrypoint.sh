@@ -3,7 +3,7 @@
 echo "${NAME}"
 
 # Set up .netrc file with GitHub credentials
-cat <<- EOF > $HOME/.netrc
+cat <<- EOF > /home/runner/work/.netrc
     machine github.com
     login gaiksaya
     password ${ACCESS_TOKEN}
@@ -11,7 +11,5 @@ cat <<- EOF > $HOME/.netrc
     login gaiksaya
     password ${ACCESS_TOKEN}
 EOF
-chmod 600 $HOME/.netrc
-
-echo "checking git remote"
-git remote -v
+chmod 600 /home/runner/work/.netrc
+cat .netrc
