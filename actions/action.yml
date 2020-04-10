@@ -10,3 +10,5 @@ runs:
   image: 'Dockerfile'
   args:
     - ${{ inputs.branchName }}
+  env:
+    NAME: ${{ inputs.branchName }}
