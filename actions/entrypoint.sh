@@ -1,4 +1,7 @@
 #!/bin/sh -l
 
 echo "${NAME}"
-echo `git branch`
+echo "------------Remote url-----------"
+echo `git remote -v`
+echo "-------------without echo-------------------"
+git remote -v
