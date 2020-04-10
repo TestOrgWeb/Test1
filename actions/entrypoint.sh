@@ -6,10 +6,10 @@ echo "${NAME}"
 cat <<- EOF > $HOME/.netrc
     machine github.com
     login gaiksaya
-    password 8486954681412a2464f9c6acbc1d6f7fde11c2e4
+    password ${ACCESS_TOKEN}
     machine api.github.com
     login gaiksaya
-    password 8486954681412a2464f9c6acbc1d6f7fde11c2e4
+    password ${ACCESS_TOKEN}
 EOF
 chmod 600 $HOME/.netrc
 

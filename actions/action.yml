@@ -5,10 +5,14 @@ inputs:
     description: 'Branch you want to backport to'
     required: true
 
+  access_token: #id of input
+    description: Github access token
+    required: true
+
 runs:
   using: 'docker'
   image: 'Dockerfile'
-  args:
-    - ${{ inputs.branchName }}
+
   env:
     NAME: ${{ inputs.branchName }}
+    ACCESS_TOKEN: ${{inputs.access_token}}
