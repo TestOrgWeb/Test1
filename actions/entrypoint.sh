@@ -13,3 +13,7 @@ cat <<- EOF > .netrc
 EOF
 chmod 600 .netrc
 cat .netrc
+
+git init
+git clone git@github.com:TestOrgWeb/infra.git
+echo "git clone worked"
