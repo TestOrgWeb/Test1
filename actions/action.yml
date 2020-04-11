@@ -1,7 +1,7 @@
 name: Backporting meta-data
 description: Inputs and outputs for the backporting action
 inputs:
-  branchName:  # id of input
+  repoName:  # id of input
     description: 'Branch you want to backport to'
     required: true
 
@@ -14,5 +14,5 @@ runs:
   image: 'Dockerfile'
 
   env:
-    NAME: ${{ inputs.branchName }}
+    NAME: ${{ inputs.repoName }}
     ACCESS_TOKEN: ${{inputs.access_token}}
