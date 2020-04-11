@@ -8,6 +8,10 @@ inputs:
   access_token: #id of input
     description: Github access token
     required: true
+  
+  branches:
+    description: Branches you want to backport to
+    required: true
 
 runs:
   using: 'docker'
@@ -16,4 +20,4 @@ runs:
   env:
     NAME: ${{ inputs.repoName }}
     ACCESS_TOKEN: ${{inputs.access_token}}
-    
+    BRANCHES: ${{inputs.branches}}

@@ -26,4 +26,5 @@ jobs:
       with:
         repoName: ${{github.event.client_payload.repository.full_name}}
         access_token: ${{ secrets.GITHUB_TOKEN }}
+        branches: ${{ env.branchName}}
 

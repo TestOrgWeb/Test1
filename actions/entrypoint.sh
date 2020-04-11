@@ -6,4 +6,4 @@ git remote -v
 echo "-------------branch name-------------------"
 git branch
 echo "-------------Checking out the branch------------"
-git checkout ${{ env.branchName }}
+git checkout ${BRANCHES}
