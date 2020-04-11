@@ -8,3 +8,4 @@ git branch
 echo "-------------Checking out the branch------------"
 git fetch
 git checkout ${BRANCHES}
+git branch
