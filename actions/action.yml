@@ -2,7 +2,7 @@ name: Backporting meta-data
 description: Inputs and outputs for the backporting action
 inputs:
   repoName:  # id of input
-    description: 'Branch you want to backport to'
+    description: 'Repo name'
     required: true
 
   access_token: #id of input
@@ -16,3 +16,4 @@ runs:
   env:
     NAME: ${{ inputs.repoName }}
     ACCESS_TOKEN: ${{inputs.access_token}}
+    
