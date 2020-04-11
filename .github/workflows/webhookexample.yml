@@ -9,12 +9,12 @@ jobs:
         branch=$(echo ${{github.event.client_payload.comment.body}} | cut -d ' ' -f 3)
         echo ::set-env name=branchName::$branch
 
-    # - name: Checking out repo
-    #   if: github.event.action == 'issue_comment'
-    #   uses: actions/checkout@v2
-    #   with:
-    #     repository: ${{github.event.client_payload.repository.full_name}}
-    #     ref: ${{ env.branchName }}
+    - name: Checking out repo
+      if: github.event.action == 'issue_comment'
+      uses: actions/checkout@v2
+      with:
+        repository: ${{github.event.client_payload.repository.full_name}}
+        ref: master
 
     - name: Printing stuff
       run: |
