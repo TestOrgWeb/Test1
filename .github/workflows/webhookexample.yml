@@ -9,6 +9,7 @@ jobs:
         branch=$(echo ${{github.event.client_payload.comment.body}} | cut -d ' ' -f 3)
         echo ::set-env name=branchName::$branch
         echo "PR url is------------- ${{github.event.client_payload.issue.pull_request.url}}"
+        curl -i ${{github.event.client_payload.issue.pull_request.url}}
 
     - name: Checking out repo
       if: github.event.action == 'issue_comment'
