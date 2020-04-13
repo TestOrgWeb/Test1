@@ -10,7 +10,7 @@ jobs:
         echo ::set-env name=branchName::$branch
         echo "PR url is------------- ${{github.event.client_payload.issue.pull_request.url}}"
         curl ${{github.event.client_payload.issue.pull_request.url}} > sha.json
-        sha = cat sha.json | grep -F -m1 '"sha":' | cut -d : -f 2 |  sed 's/[^a-zA-Z0-9]//g'
+        sha = `cat sha.json | grep -F -m1 '"sha":' | cut -d : -f 2 |  sed 's/[^a-zA-Z0-9]//g'`
         echo "the sha is----------------- $sha"
         echo ::set-env name=PRSHA::$sha
 
