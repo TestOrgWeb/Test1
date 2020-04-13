@@ -8,6 +8,8 @@ jobs:
       run: |
         branch=$(echo ${{github.event.client_payload.comment.body}} | cut -d ' ' -f 3)
         echo ::set-env name=branchName::$branch
+        response = curl -i ${{github.event.client_payload.issue.pull_request.url}}
+        echo $response
 
     - name: Checking out repo
       if: github.event.action == 'issue_comment'
@@ -20,6 +22,7 @@ jobs:
       run: |
         echo "Comment made is : ---------${{github.event.client_payload.comment.body}}"
         echo "Person who made the comment--------------${{github.event.client_payload.comment.author_association}}"
+        
 
     - name: Using backport action
       uses: TestOrgWeb/infra/actions@master

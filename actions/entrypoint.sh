@@ -9,3 +9,5 @@ echo "-------------Checking out the branch------------"
 git fetch
 git checkout ${BRANCHES}
 git branch
+pwd echo "-------------------"
+ls -al
