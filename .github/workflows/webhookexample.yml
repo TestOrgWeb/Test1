@@ -9,7 +9,9 @@ jobs:
         branch=$(echo ${{github.event.client_payload.comment.body}} | cut -d ' ' -f 3)
         echo ::set-env name=branchName::$branch
         echo "PR url is------------- ${{github.event.client_payload.issue.pull_request.url}}"
-        curl -i ${{github.event.client_payload.issue.pull_request.url}}
+        curl ${{github.event.client_payload.issue.pull_request.url}} > sha.json
+        sha = cat sha.json | grep -F -m1 '"sha":' | cut -d : -f 2 |  sed 's/[^a-zA-Z0-9]//g'
+        echo ::set-env name=PRSHA::$sha
 
     - name: Checking out repo
       if: github.event.action == 'issue_comment'
