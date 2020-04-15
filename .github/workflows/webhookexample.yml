@@ -11,8 +11,8 @@ jobs:
         echo "PR url is------------- ${{github.event.client_payload.issue.pull_request.url}}"
         curl ${{github.event.client_payload.issue.pull_request.url}} > sha.json
         sha="`cat sha.json | grep -F -m1 '"sha":' | cut -d : -f 2 |  sed 's/[^a-zA-Z0-9]//g'`"
-        echo "the sha is---- $sha"
-        echo ::set-env name=PRSHA::$sha
+        echo "the sha is--------------- $sha"
+        echo ::set-env name=commitsha::$sha
 
     - name: Checking out repo
       if: github.event.action == 'issue_comment'
@@ -33,4 +33,5 @@ jobs:
         repoName: ${{github.event.client_payload.repository.full_name}}
         access_token: ${{ secrets.GITHUB_TOKEN }}
         branches: ${{ env.branchName}}
+        commitSha: ${{env.commitsha}}
 

@@ -13,6 +13,10 @@ inputs:
     description: Branches you want to backport to
     required: true
 
+  commitSha:
+    description: Commit sha to be cheery picked
+    required: true
+
 runs:
   using: 'docker'
   image: 'Dockerfile'
@@ -20,4 +24,5 @@ runs:
   env:
     NAME: ${{ inputs.repoName }}
     ACCESS_TOKEN: ${{inputs.access_token}}
-    BRANCHES: ${{inputs.branches}}
+    BRANCH: ${{inputs.branches}}
+    COMMIT_SHA: ${{inputs.commitSha}}
