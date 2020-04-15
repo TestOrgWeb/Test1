@@ -1,11 +1,9 @@
 #!/bin/sh -l
 
 echo "Repository name: ${NAME}"
-echo "------------Remote url-----------"
-git remote -v
 echo "------------Branch name-----------"
 git fetch
-echo ${BRANCH}
+echo ${BRANCH} 
 echo "----------All branches---------------"
 echo `git branch -r`
 a=`git branch -r | grep ${BRANCH} | sed 's/origin\///'`
