@@ -8,19 +8,10 @@ git fetch
 echo ${BRANCH}
 echo "----------All branches---------------"
 echo `git branch -r`
-# echo"------with grep--------"
-# git branch | grep ${BRANCH}
-# echo "---------Everything-------"
-# git branch -r | grep ${BRANCH} | sed 's/origin\///'
-
-# mapfile -t a < < (git branch -r | grep ${BRANCH} | sed 's/origin\///')
-
 a=`git branch -r | grep ${BRANCH} | sed 's/origin\///'`
 echo "---------For loop-----------"
 for i in $a; do
     echo ${i}
-    echo"Without brackets"
-    echo $i
 done
 
 # for i in $(git branch -r | grep ${BRANCH} | sed 's/origin\///'); do
