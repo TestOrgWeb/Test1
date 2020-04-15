@@ -34,7 +34,7 @@ for i in $backportingBranches; do
     echo "--------Push the branch to upstream-------------"
     git push -f origin autoBackport-${i}
     echo "-------Creating PR----------------"
-    echo `curl -X POST \
+    `curl -X POST \
     https://api.github.com/repos/${NAME}/pulls?access_token=${ACCESS_TOKEN} \
     -H 'Content-Type: application/json' \
     -H 'Authorization: Bearer ${ACCESS_TOKEN}' \
