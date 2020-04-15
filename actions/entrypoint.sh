@@ -8,9 +8,9 @@ echo "------------Branch name-----------"
 git fetch
 echo ${BRANCH}
 echo "----------All branches---------------"
-git branch
-echo"------with grep--------"
-git branch | grep ${BRANCH}
+git branch -r
+# echo"------with grep--------"
+# git branch | grep ${BRANCH}
 # echo "---------Everything-------"
 # git branch -r | grep ${BRANCH} | sed 's/origin\///'
 
