@@ -1,6 +1,7 @@
 #!/bin/sh -l
 
 echo "Repository name: ${NAME}"
+
 echo "------------Branch name-----------"
 git fetch
 echo ${BRANCH} 
