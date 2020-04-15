@@ -3,11 +3,13 @@
 echo "Repository name: ${NAME}"
 echo "------------Remote url-----------"
 git remote -v
-pwd 
-echo "---------See the git config----------"
-ls -al
-cat .git/config
+pwd
+echo "------------Branch name-----------"
+echo ${BRANCH}
+echo "----------All branches---------------"
 a=`git branch -r | grep ${BRANCH} | sed 's/origin\///'`
+echo $a
+echo"---------For loop-----------"
 for i in $a; do
     echo ${i}
     echo"Without brackets"
