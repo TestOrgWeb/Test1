@@ -7,8 +7,10 @@ pwd
 echo "------------Branch name-----------"
 echo ${BRANCH}
 echo "----------All branches---------------"
-a="`git branch -r | grep ${BRANCH} | sed 's/origin\///'`"
-echo $a
+git branch -r | grep ${BRANCH} | sed 's/origin\///'
+
+mapfile -t a < < (git branch -r | grep ${BRANCH} | sed 's/origin\///')
+echo ${a[@]}
 echo "---------For loop-----------"
 for i in $a; do
     echo ${i}
