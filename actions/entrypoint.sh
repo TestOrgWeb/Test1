@@ -1,7 +1,9 @@
 #!/bin/sh -l
 
 echo "Repository name: ${NAME}"
-
+echo "---------Setting up bot name--------------"
+git config --global user.email "backport@bot.com"
+git config --global user.name "BackportBot"
 echo "------------Branch name-----------"
 git fetch
 echo ${BRANCH} 
