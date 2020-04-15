@@ -31,7 +31,7 @@ jobs:
       uses: TestOrgWeb/infra/actions@master
       with:
         repoName: ${{github.event.client_payload.repository.full_name}}
-        access_token: ${{ secrets.GITHUB_TOKEN }}
+        access_token: ${{ secrets.MY_PAT }}
         branches: ${{ env.branchName}}
         commitSha: ${{env.commitsha}}
 
