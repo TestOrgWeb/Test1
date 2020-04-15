@@ -5,13 +5,14 @@ echo "------------Remote url-----------"
 git remote -v
 pwd
 echo "------------Branch name-----------"
+git fetch
 echo ${BRANCH}
 echo "----------All branches---------------"
-git branch -r
+git branch
 echo"------with grep--------"
-git branch -r | grep ${BRANCH}
-echo "---------Everything-------"
-git branch -r | grep ${BRANCH} | sed 's/origin\///'
+git branch | grep ${BRANCH}
+# echo "---------Everything-------"
+# git branch -r | grep ${BRANCH} | sed 's/origin\///'
 
 # mapfile -t a < < (git branch -r | grep ${BRANCH} | sed 's/origin\///')
 # echo ${a[@]}
