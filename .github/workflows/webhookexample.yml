@@ -17,8 +17,8 @@ jobs:
     - name: Checking out repo
       if: github.event.action == 'issue_comment'
       uses: actions/checkout@v2
-      token: ${{ secrets.MY_PAT }}
       with:
+        token: ${{ secrets.MY_PAT }}
         repository: ${{github.event.client_payload.repository.full_name}}
         ref: master
 
