@@ -3,7 +3,17 @@
 echo "Repository name: ${NAME}"
 echo "---------Setting up bot name--------------"
 git config --global user.email "backport@bot.com"
-git config --global user.name "BackportBot"
+git config --global user.name "gaiksaya"
+echo "----------Set up .netrc file with GitHub credentials------"
+cat <<- EOF > $HOME/.netrc
+    machine github.com
+    login gaiksaya
+    password ${ACCESS_TOKEN}
+    machine api.github.com
+    login gaiksaya
+    password ${ACCESS_TOKEN}
+EOF
+chmod 600 $HOME/.netrc
 echo "------------Branch name-----------"
 git fetch
 echo ${BRANCH} 
@@ -24,7 +34,7 @@ for i in $backportingBranches; do
     echo "--------Push the branch to upstream-------------"
     git push -f origin autoBackport-${i}
     echo "-------Creating PR----------------"
-    `curl -X POST \
+    echo `curl -X POST \
     https://api.github.com/repos/${NAME}/pulls?access_token=${ACCESS_TOKEN} \
     -H 'Content-Type: application/json' \
     -H 'Authorization: Bearer ${ACCESS_TOKEN}' \
