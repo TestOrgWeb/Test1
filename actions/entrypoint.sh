@@ -1,23 +1,27 @@
 #!/bin/sh -l
 
 echo "Repository name: ${NAME}"
+
 echo "---------Setting up bot name--------------"
 git config --global user.email "gaiksaya@amazon.com"
 git config --global user.name "Backport Bot"
-# echo "----------Set up .netrc file with GitHub credentials------"
-# cat <<- EOF > $HOME/.netrc
-#     machine github.com
-#     login gaiksaya
-#     password ${ACCESS_TOKEN}
-#     machine api.github.com
-#     login gaiksaya
-#     password ${ACCESS_TOKEN}
-# EOF
-# chmod 600 $HOME/.netrc
+
+echo "----------Set up .netrc file with GitHub credentials------"
+cat <<- EOF > $HOME/.netrc
+    machine github.com
+    login gaiksaya
+    password ${ACCESS_TOKEN}
+    machine api.github.com
+    login gaiksaya
+    password ${ACCESS_TOKEN}
+EOF
+chmod 600 $HOME/.netrc
+
 echo "------------Branch name-----------"
 git fetch
 echo ${BRANCH} 
 backportingBranches=`git branch -r | grep ${BRANCH} | sed 's/origin\///'`
+
 echo "----------------Backporting now----------------"
 for i in $backportingBranches; do
     echo "Current branch in process: ${i} "
