@@ -7,16 +7,20 @@ pwd
 echo "------------Branch name-----------"
 echo ${BRANCH}
 echo "----------All branches---------------"
+git branch -r
+echo"------with grep--------"
+git branch -r | grep ${BRANCH}
+echo "---------Everything-------"
 git branch -r | grep ${BRANCH} | sed 's/origin\///'
 
-mapfile -t a < < (git branch -r | grep ${BRANCH} | sed 's/origin\///')
-echo ${a[@]}
-echo "---------For loop-----------"
-for i in $a; do
-    echo ${i}
-    echo"Without brackets"
-    echo $i
-done
+# mapfile -t a < < (git branch -r | grep ${BRANCH} | sed 's/origin\///')
+# echo ${a[@]}
+# echo "---------For loop-----------"
+# for i in $a; do
+#     echo ${i}
+#     echo"Without brackets"
+#     echo $i
+# done
 # for i in $(git branch -r | grep ${BRANCH} | sed 's/origin\///'); do
 #     git fetch
 #     git checkout ${i}
