@@ -9,8 +9,11 @@ echo ${BRANCH}
 echo "----------All branches---------------"
 echo `git branch -r`
 a=`git branch -r | grep ${BRANCH} | sed 's/origin\///'`
+echo "----------Value of a----------------"
+echo $a
 echo "---------For loop-----------"
-for i in $a; do
+for i in $a; 
+do
     echo ${i}
 done
 
