@@ -29,10 +29,4 @@ jobs:
         access_token: ${{ secrets.MY_PAT }}
         branches: ${{ env.branchName}}
         commitSha: ${{env.commitsha}}
-      continue-on-error: true
-
-    - name: Results
-      if: failure()
-      run: |
-        echo "Backporting failed!!! Need manual intervention"
 
