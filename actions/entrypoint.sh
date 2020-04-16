@@ -32,8 +32,8 @@ for i in $backportingBranches; do
     echo "----------Cherry picking the commit-------------------"
     git cherry-pick ${COMMIT_SHA}
     if [ `echo $?` -ne 0 ]
-    then echo "Need manual intervention to resolve the conflicts"
-        exit 1
+    then echo "BACKPORTING FAILED FOR BRANCH $i!!!!! NEED MANUAL INTERVENTION TO RESOLVE CONFLICTS"
+    exit 1
     else
     echo "--------Push the branch to upstream-------------"
     git push -f origin autoBackport-${i}
@@ -47,6 +47,7 @@ for i in $backportingBranches; do
          \"head\":\"autoBackport-${i}\",
          \"base\":\"${i}\"
          }"`
+    echo "Backporting successful for branch: $i"
     fi
 
 done

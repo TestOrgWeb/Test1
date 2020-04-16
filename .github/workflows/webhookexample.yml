@@ -1,17 +1,16 @@
 name: Webhook Example
 on: repository_dispatch
 jobs:
-  build:
+  Backport:
     runs-on: ubuntu-latest
     steps:
     - name: Getting branch name from the comment
       run: |
         branch=$(echo ${{github.event.client_payload.comment.body}} | cut -d ' ' -f 3)
         echo ::set-env name=branchName::$branch
-        echo "PR url is------------- ${{github.event.client_payload.issue.pull_request.url}}"
         curl ${{github.event.client_payload.issue.pull_request.url}} > sha.json
         sha="`cat sha.json | grep -F -m1 '"sha":' | cut -d : -f 2 |  sed 's/[^a-zA-Z0-9]//g'`"
-        echo "the sha is--------------- $sha"
+        echo "the commit sha is--------------- $sha"
         echo ::set-env name=commitsha::$sha
 
     - name: Checking out repo
@@ -22,17 +21,18 @@ jobs:
         repository: ${{github.event.client_payload.repository.full_name}}
         ref: master
 
-    - name: Printing stuff
-      run: |
-        echo "Comment made is : ---------${{github.event.client_payload.comment.body}}"
-        echo "Person who made the comment--------------${{github.event.client_payload.comment.author_association}}"
-        
-
-    - name: Using backport action
+    - name: Backporting
+      id: backporting
       uses: TestOrgWeb/infra/actions@master
       with:
         repoName: ${{github.event.client_payload.repository.full_name}}
         access_token: ${{ secrets.MY_PAT }}
         branches: ${{ env.branchName}}
         commitSha: ${{env.commitsha}}
+      continue-on-error: true
+
+    - name: Results
+      if: failure()
+      run: |
+        echo "Backporting failed!!! Need manual intervention"
 
