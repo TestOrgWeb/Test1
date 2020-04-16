@@ -33,7 +33,6 @@ for i in $backportingBranches; do
     git cherry-pick ${COMMIT_SHA}
     if [ `echo $?` -ne 0 ]
     then echo "BACKPORTING FAILED FOR BRANCH $i!!!!! NEED MANUAL INTERVENTION TO RESOLVE CONFLICTS"
-    exit 1
     else
     echo "--------Push the branch to upstream-------------"
     git push -f origin autoBackport-${i}

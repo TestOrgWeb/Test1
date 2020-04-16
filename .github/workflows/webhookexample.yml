@@ -29,7 +29,7 @@ jobs:
         access_token: ${{ secrets.MY_PAT }}
         branches: ${{ env.branchName}}
         commitSha: ${{env.commitsha}}
-      #continue-on-error: true
+      continue-on-error: true
 
     - name: Results
       if: failure()
