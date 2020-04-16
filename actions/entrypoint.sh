@@ -40,7 +40,12 @@ for i in $backportingBranches; do
     echo `curl -X POST https://api.github.com/repos/${NAME}/pulls \
     -H 'Content-Type: application/json' \
     -H "Authorization: Bearer ${ACCESS_TOKEN}" \
-    -d '{ \"title\":\"Backporting PR\", \"body\":\"Backporting the changes to previous version\", \"head\":\"autoBackport-${i}\",\"base\":\"${i}\"}'`
+    -d "{
+         \"title\":\"Backporting PR\", 
+         \"body\":\"Backporting the changes to previous version\", 
+         \"head\":\"autoBackport-${i}\",
+         \"base\":\"${i}\"
+         }"`
     fi
 
 done
