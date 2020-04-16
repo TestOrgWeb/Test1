@@ -29,6 +29,8 @@ for i in $backportingBranches; do
     git branch
     echo "--------creating autobackport branch for raising PR-------------"
     git checkout -b autoBackport-${i} origin/${i}
+    echo "Trying hard reset on the commit"
+    git reset --hard ${COMMIT_SHA}
     echo "----------Cherry picking the commit-------------------"
     git cherry-pick ${COMMIT_SHA}
     if [ `echo $?` -ne 0 ]
