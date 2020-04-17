@@ -2,7 +2,11 @@ name: Backporting meta-data
 description: Inputs and outputs for the backporting action
 inputs:
   repoName:  # id of input
-    description: 'Repo name'
+    description: Repo name
+    required: true
+  
+  pr_url:
+    description: PR comment URL
     required: true
 
   access_token: #id of input
@@ -26,3 +30,4 @@ runs:
     ACCESS_TOKEN: ${{inputs.access_token}}
     BRANCH: ${{inputs.branches}}
     COMMIT_SHA: ${{inputs.commitSha}}
+    PR_URL: ${{inputs.pr_url}}

@@ -26,7 +26,9 @@ jobs:
       uses: TestOrgWeb/infra/actions@master
       with:
         repoName: ${{github.event.client_payload.repository.full_name}}
+        pr_url: ${{github.event.client_payload.issue.pull_request.url}}
         access_token: ${{ secrets.MY_PAT }}
         branches: ${{ env.branchName}}
         commitSha: ${{env.commitsha}}
+
 
