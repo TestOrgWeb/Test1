@@ -13,7 +13,7 @@ echo "Regex specified: ${BRANCH}"
 git branch -r | sed 's/origin\///' >> regex
 backportingBranches=`grep "^  ${BRANCH}" regex`
 echo $backportingBranches
-echo ${GITHUB_RUN_ID}
+echo "https://github.com/TestOrgWeb/infra/actions/runs/${GITHUB_RUN_ID}"
 #echo "------workflow url is: $workflowUrl"
 # echo "----------------Backporting now----------------"
 # for i in $backportingBranches; do
