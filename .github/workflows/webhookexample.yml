@@ -6,9 +6,6 @@ jobs:
     steps:
     - name: Getting branch name from the comment
       run: |
-        echo "--------Run id: ${{github.run_id}}-------"
-        echo "-------Job id: ${{github.job}}-----------"
-        echo "----------Run number: ${{github.run_number}}----------"
         branch=$(echo ${{github.event.client_payload.comment.body}} | cut -d ' ' -f 3)
         echo ::set-env name=branchName::$branch
         curl ${{github.event.client_payload.issue.pull_request.url}} > sha.json
