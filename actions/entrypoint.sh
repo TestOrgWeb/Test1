@@ -25,6 +25,7 @@ echo $backportingBranches
 #     git cherry-pick ${COMMIT_SHA}
 #     if [ `echo $?` -ne 0 ]
 #     then echo "BACKPORTING FAILED FOR BRANCH $i!!!!! NEED MANUAL INTERVENTION TO RESOLVE CONFLICTS"
+#     # Informing the user via PR comment that it failed
 #     `curl -X POST ${PR_URL} -H 'Content-Type: application/json' \
 #     -H "Authorization: Bearer ${ACCESS_TOKEN}" \
 #     -d "{ 
@@ -44,6 +45,7 @@ echo $backportingBranches
 #          \"base\":\"${i}\"
 #          }"`
 #     echo "Backporting successful for branch: $i"
+#     # Informing the user via PR comment that it succeeded
 #     `curl -X POST ${PR_URL} -H 'Content-Type: application/json' \
 #     -H "Authorization: Bearer ${ACCESS_TOKEN}" \
 #     -d "{ 
