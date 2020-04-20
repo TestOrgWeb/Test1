@@ -26,7 +26,7 @@ for i in $backportingBranches; do
     then 
     echo "BACKPORTING FAILED FOR BRANCH $i!!!!! NEED MANUAL INTERVENTION TO RESOLVE CONFLICTS"
     # Informing the user via PR comment that it failed
-    `curl -X POST ${PR_URL} -H 'Content-Type: application/json' \
+    echo `curl -X POST ${PR_URL} -H 'Content-Type: application/json' \
     -H "Authorization: Bearer ${ACCESS_TOKEN}" \
     -d "{ 
         \"body\" : \"Backporting failed for branch $i!!! NEED MANUAL INTERVENTION TO RESOLVE CONFLICTS \n
@@ -36,7 +36,7 @@ for i in $backportingBranches; do
     echo "--------Push the branch to upstream-------------"
     git push -f origin autoBackport-${i}
     # Creating PR now
-    echo "-------Creating PR----------------"
+    echo "---------Creating PR----------------"
     echo `curl -X POST https://api.github.com/repos/${NAME}/pulls \
     -H 'Content-Type: application/json' \
     -H "Authorization: Bearer ${ACCESS_TOKEN}" \
@@ -48,12 +48,11 @@ for i in $backportingBranches; do
          }"`
     echo "Backporting successful for branch: $i"
     # Informing the user via PR comment that it succeeded
-    `curl -X POST ${PR_URL} -H 'Content-Type: application/json' \
+    echo `curl -X POST ${PR_URL} -H 'Content-Type: application/json' \
     -H "Authorization: Bearer ${ACCESS_TOKEN}" \
     -d "{ 
         \"body\" : \"Backporting successful for branch $i \n
-        Workflow URL\: $workflowUrl\"
-        }"`
+        Workflow URL\: $workflowUrl\" }"`
     fi
 
 done
