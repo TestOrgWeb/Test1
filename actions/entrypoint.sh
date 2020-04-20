@@ -7,20 +7,22 @@ git config --global user.email "backport@amazon.com"
 git config --global user.name "Backport Bot"
 
 git fetch
+
+#setting up workflow URL
 workflowUrl=https://github.com/TestOrgWeb/infra/actions/runs/${GITHUB_RUN_ID}
 
-echo "------------Branch/es name-----------"
+#Branches where changes need to be
 echo "Regex specified: ${BRANCH}"
 git branch -r | sed 's/origin\///' >> regex
 backportingBranches=`grep "^  ${BRANCH}" regex`
 rm regex
+echo "------------Branch/es name-----------"
 echo $backportingBranches
 
 echo "----------------Backporting now----------------"
 for i in $backportingBranches; do
     echo "Current branch in process: ${i} "
     git checkout ${i}
-    git branch
     echo "--------creating autobackport branch for raising PR-------------"
     git checkout -b autoBackport-${i} origin/${i}
     echo "----------Cherry picking the commit-------------------"
@@ -32,7 +34,7 @@ for i in $backportingBranches; do
     git push origin autoBackport-${i}
     echo "BACKPORTING FAILED FOR BRANCH $i!!!!! NEED MANUAL INTERVENTION TO RESOLVE CONFLICTS"
     # Creating PR now
-    echo "---------Creating PR----------------"
+    echo "---------Creating merge conflict PR----------------"
     response=$(curl -X POST https://api.github.com/repos/${NAME}/pulls \
     -H 'Content-Type: application/json' \
     -H "Authorization: Bearer ${ACCESS_TOKEN}" \
@@ -47,9 +49,7 @@ for i in $backportingBranches; do
     echo `curl -X POST ${PR_URL} -H 'Content-Type: application/json' \
     -H "Authorization: Bearer ${ACCESS_TOKEN}" \
     -d "{ 
-        \"body\" : \"Backporting attempted at ${COMMENTTIME} failed for branch $i!! \
-        Manual intervention required to resolve the conflicts. Workflow URL - $workflowUrl \
-        PR- $pull_url\"
+        \"body\" : \"Backporting attempted at ${COMMENTTIME} failed for branch $i!! Manual intervention required to resolve the conflicts. Workflow URL - $workflowUrl PR- $pull_url\"
         }"`
     else
     echo "--------Push the branch to upstream-------------"
@@ -72,8 +72,7 @@ for i in $backportingBranches; do
     echo `curl -X POST ${PR_URL} -H 'Content-Type: application/json' \
     -H "Authorization: Bearer ${ACCESS_TOKEN}" \
     -d "{ 
-        \"body\" : \"Backporting attempted at ${COMMENTTIME} successful for branch $i  \
-        Workflow URL- $workflowUrl PR URL- $new_pr\" 
+        \"body\" : \"Backporting attempted at ${COMMENTTIME} successful for branch $i Workflow URL- $workflowUrl PR URL- $new_pr\" 
         }"`
 
     fi
