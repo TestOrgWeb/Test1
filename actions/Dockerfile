@@ -1,6 +1,7 @@
 # Container image that runs your code
 FROM alpine/git
 RUN apk --no-cache add curl
+RUN apt-get install -y jq
 # Copies your code file from your action repository to the filesystem path `/` of the container
 COPY entrypoint.sh /entrypoint.sh
 

@@ -31,26 +31,32 @@ for i in $backportingBranches; do
     git commit -m "Merge Conflicts here! Need to be resolved"
     git push origin autoBackport-${i}
     echo "BACKPORTING FAILED FOR BRANCH $i!!!!! NEED MANUAL INTERVENTION TO RESOLVE CONFLICTS"
+    # Creating PR now
+    echo "---------Creating PR----------------"
+    response=$(curl -X POST https://api.github.com/repos/${NAME}/pulls \
+    -H 'Content-Type: application/json' \
+    -H "Authorization: Bearer ${ACCESS_TOKEN}" \
+    -d "{
+         \"title\":\"Backporting PR with conflicts\", 
+         \"body\":\"This PR has merge conflicts. Please refer to the files changed tab, resolve and then merge\", 
+         \"head\":\"autoBackport-${i}\",
+         \"base\":\"${i}\"
+         }")
+    pull_url=$(echo "$response" | jq .html_url)
     # Informing the user via PR comment that it failed
     echo `curl -X POST ${PR_URL} -H 'Content-Type: application/json' \
     -H "Authorization: Bearer ${ACCESS_TOKEN}" \
     -d "{ 
-        \"body\" : \"Backporting attempted at ${COMMENTTIME} failed for branch $i!! Manual intervention required to resolve the conflicts. Workflow URL - $workflowUrl\"
+        \"body\" : \"Backporting attempted at ${COMMENTTIME} failed for branch $i!! \
+        Manual intervention required to resolve the conflicts. Workflow URL - $workflowUrl \
+        PR- $pull_url\"
         }"`
     else
     echo "--------Push the branch to upstream-------------"
     git push origin autoBackport-${i}
-    # Informing the user via PR comment that it succeeded
-    echo "Backporting successful for branch: $i"
-    echo `curl -X POST ${PR_URL} -H 'Content-Type: application/json' \
-    -H "Authorization: Bearer ${ACCESS_TOKEN}" \
-    -d "{ 
-        \"body\" : \"Backporting attempted at ${COMMENTTIME} successful for branch $i  Workflow URL- $workflowUrl\" 
-        }"`
-    fi
     # Creating PR now
     echo "---------Creating PR----------------"
-    echo `curl -X POST https://api.github.com/repos/${NAME}/pulls \
+    res=$(curl -X POST https://api.github.com/repos/${NAME}/pulls \
     -H 'Content-Type: application/json' \
     -H "Authorization: Bearer ${ACCESS_TOKEN}" \
     -d "{
@@ -58,5 +64,18 @@ for i in $backportingBranches; do
          \"body\":\"Backporting the changes to previous version\", 
          \"head\":\"autoBackport-${i}\",
          \"base\":\"${i}\"
-         }"`
+         }")
+    new_pr=$(echo "$res" | jq.html_url)
+    echo "Backporting successful for branch: $i"
+
+    # Informing the user via PR comment that it succeeded
+    echo `curl -X POST ${PR_URL} -H 'Content-Type: application/json' \
+    -H "Authorization: Bearer ${ACCESS_TOKEN}" \
+    -d "{ 
+        \"body\" : \"Backporting attempted at ${COMMENTTIME} successful for branch $i  \
+        Workflow URL- $workflowUrl PR URL- $new_pr\" 
+        }"`
+
+    fi
+
 done
