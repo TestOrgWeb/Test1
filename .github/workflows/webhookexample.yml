@@ -12,6 +12,7 @@ jobs:
         sha="`cat sha.json | grep -F -m1 '"sha":' | cut -d : -f 2 |  sed 's/[^a-zA-Z0-9]//g'`"
         echo "the commit sha is--------------- $sha"
         echo ::set-env name=commitsha::$sha
+        echo ::set-env name=time::${{github.event.client_payload.comment.created_at}}
 
     - name: Checking out repo
       if: github.event.action == 'issue_comment'
@@ -30,5 +31,6 @@ jobs:
         access_token: ${{ secrets.MY_PAT }}
         branches: ${{ env.branchName}}
         commitSha: ${{env.commitsha}}
+        commentTime: ${{env.time}}
 
 

@@ -21,6 +21,9 @@ inputs:
     description: Commit sha to be cheery picked
     required: true
 
+  commentTime:
+    description: Time at which comment was made
+
 runs:
   using: 'docker'
   image: 'Dockerfile'
@@ -31,3 +34,4 @@ runs:
     BRANCH: ${{inputs.branches}}
     COMMIT_SHA: ${{inputs.commitSha}}
     PR_URL: ${{inputs.pr_url}}
+    COMMENTTIME: ${{inputs.commentTime}}

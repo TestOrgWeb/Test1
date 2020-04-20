@@ -29,7 +29,7 @@ for i in $backportingBranches; do
     echo `curl -X POST ${PR_URL} -H 'Content-Type: application/json' \
     -H "Authorization: Bearer ${ACCESS_TOKEN}" \
     -d "{ 
-        \"body\" : \"Backporting failed for branch $i!!! NEED MANUAL INTERVENTION TO RESOLVE CONFLICTS Workflow URL  $workflowUrl\"
+        \"body\" : \"Backporting attempted at ${COMMENTTIME} failed for branch $i!! Manual intervention required to resolve the conflicts. Workflow URL - $workflowUrl\"
         }"`
     else
     echo "--------Push the branch to upstream-------------"
@@ -50,7 +50,7 @@ for i in $backportingBranches; do
     echo `curl -X POST ${PR_URL} -H 'Content-Type: application/json' \
     -H "Authorization: Bearer ${ACCESS_TOKEN}" \
     -d "{ 
-        \"body\" : \"Backporting successful for branch $i  Workflow URL $workflowUrl\" 
+        \"body\" : \"Backporting attempted at ${COMMENTTIME} successful for branch $i  Workflow URL- $workflowUrl\" 
         }"`
     fi
 
