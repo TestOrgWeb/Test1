@@ -8,11 +8,13 @@ git config --global user.name "Backport Bot"
 
 git fetch
 workflowUrl=https://github.com/TestOrgWeb/infra/actions/runs/${GITHUB_RUN_ID}
+
 echo "------------Branch/es name-----------"
 echo "Regex specified: ${BRANCH}"
 git branch -r | sed 's/origin\///' >> regex
 backportingBranches=`grep "^  ${BRANCH}" regex`
 echo $backportingBranches
+
 echo "----------------Backporting now----------------"
 for i in $backportingBranches; do
     echo "Current branch in process: ${i} "
@@ -23,7 +25,10 @@ for i in $backportingBranches; do
     echo "----------Cherry picking the commit-------------------"
     git cherry-pick ${COMMIT_SHA}
     if [ `echo $?` -ne 0 ]
-    then 
+    then
+    git add .
+    git commit -m "Merge Conflicts here! Need to be resolved"
+    git push origin autoBackport-${i}
     echo "BACKPORTING FAILED FOR BRANCH $i!!!!! NEED MANUAL INTERVENTION TO RESOLVE CONFLICTS"
     # Informing the user via PR comment that it failed
     echo `curl -X POST ${PR_URL} -H 'Content-Type: application/json' \
