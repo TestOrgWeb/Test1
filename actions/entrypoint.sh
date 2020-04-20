@@ -7,7 +7,7 @@ git config --global user.email "backport@amazon.com"
 git config --global user.name "Backport Bot"
 
 git fetch
-workflowUrl="https://github.com/TestOrgWeb/infra/actions/runs/${GITHUB_RUN_ID}"
+workflowUrl=https://github.com/TestOrgWeb/infra/actions/runs/${GITHUB_RUN_ID}
 echo "------------Branch/es name-----------"
 echo "Regex specified: ${BRANCH}"
 git branch -r | sed 's/origin\///' >> regex
@@ -51,8 +51,8 @@ for i in $backportingBranches; do
     echo `curl -X POST ${PR_URL} -H 'Content-Type: application/json' \
     -H "Authorization: Bearer ${ACCESS_TOKEN}" \
     -d "{ 
-        \"body\" : \"Backporting successful for branch $i \n
-        Workflow URL\: $workflowUrl\" }"`
+        \"body\" : \"Backporting successful for branch $i  Workflow URL $workflowUrl\" 
+        }"`
     fi
 
 done
