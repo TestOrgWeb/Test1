@@ -13,6 +13,7 @@ echo "------------Branch/es name-----------"
 echo "Regex specified: ${BRANCH}"
 git branch -r | sed 's/origin\///' >> regex
 backportingBranches=`grep "^  ${BRANCH}" regex`
+rm regex
 echo $backportingBranches
 
 echo "----------------Backporting now----------------"
@@ -38,7 +39,15 @@ for i in $backportingBranches; do
         }"`
     else
     echo "--------Push the branch to upstream-------------"
-    git push -f origin autoBackport-${i}
+    git push origin autoBackport-${i}
+    # Informing the user via PR comment that it succeeded
+    echo "Backporting successful for branch: $i"
+    echo `curl -X POST ${PR_URL} -H 'Content-Type: application/json' \
+    -H "Authorization: Bearer ${ACCESS_TOKEN}" \
+    -d "{ 
+        \"body\" : \"Backporting attempted at ${COMMENTTIME} successful for branch $i  Workflow URL- $workflowUrl\" 
+        }"`
+    fi
     # Creating PR now
     echo "---------Creating PR----------------"
     echo `curl -X POST https://api.github.com/repos/${NAME}/pulls \
@@ -50,13 +59,4 @@ for i in $backportingBranches; do
          \"head\":\"autoBackport-${i}\",
          \"base\":\"${i}\"
          }"`
-    echo "Backporting successful for branch: $i"
-    # Informing the user via PR comment that it succeeded
-    echo `curl -X POST ${PR_URL} -H 'Content-Type: application/json' \
-    -H "Authorization: Bearer ${ACCESS_TOKEN}" \
-    -d "{ 
-        \"body\" : \"Backporting attempted at ${COMMENTTIME} successful for branch $i  Workflow URL- $workflowUrl\" 
-        }"`
-    fi
-
 done
