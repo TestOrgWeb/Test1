@@ -55,8 +55,8 @@ for i in $backportingBranches; do
     echo `curl -X POST ${COMMENT_URL} -H 'Content-Type: application/json' \
     -H "Authorization: Bearer ${ACCESS_TOKEN}" \
     -d "{ 
-        \"body\" : \"Backporting attempted at ${COMMENTTIME} failed for branch $i!! [Workflow]($workflowUrl)\
-        Manual intervention required to resolve the conflicts\n\
+        \"body\" : \"Backporting attempted at ${COMMENTTIME} failed for branch $i!! Manual intervention required to resolve the conflicts\n\
+        [Check Workflow]($workflowUrl)\n\
         [Check new PR]($pull_url) \"
         }"`
 
@@ -82,8 +82,8 @@ for i in $backportingBranches; do
     echo `curl -X POST ${COMMENT_URL} -H 'Content-Type: application/json' \
     -H "Authorization: Bearer ${ACCESS_TOKEN}" \
     -d "{ 
-        \"body\" : \"Backporting attempted at ${COMMENTTIME} successful for branch $i\
-        [Workflow]($workflowUrl)\n\
+        \"body\" : \"Backporting attempted at ${COMMENTTIME} successful for branch $i\n\
+        [Check Workflow]($workflowUrl)\n\
         [Check new PR]($new_pr)\" 
         }"`
 
