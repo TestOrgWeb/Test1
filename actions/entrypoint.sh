@@ -56,14 +56,14 @@ for i in $backportingBranches; do
     -H "Authorization: Bearer ${ACCESS_TOKEN}" \
     -d "{ 
         \"body\" : \"Backporting attempted at ${COMMENTTIME} failed for branch $i!! [Workflow]($workflowUrl)\
-        Manual intervention required to resolve the conflicts\
+        Manual intervention required to resolve the conflicts\\\
         [Check new PR]($pull_url) \"
         }"`
 
     else #success scenario
     echo "--------Push the branch to upstream-------------"
     git push origin $autobranch
-    
+
     # Creating PR now
     echo "---------Creating PR----------------"
     res=$(curl -X POST https://api.github.com/repos/${NAME}/pulls \
