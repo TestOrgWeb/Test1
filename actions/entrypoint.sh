@@ -37,7 +37,8 @@ for i in $backportingBranches; do
     git commit -m "Merge Conflicts here!"
     git push origin $autobranch
     echo "BACKPORTING FAILED FOR BRANCH $i!!!!! NEED MANUAL INTERVENTION TO RESOLVE CONFLICTS"
-    # Creating PR now
+
+    # Creating PR  with conflicts now
     echo "---------Creating merge conflict PR----------------"
     response=$(curl -X POST https://api.github.com/repos/${NAME}/pulls \
     -H 'Content-Type: application/json' \
@@ -49,16 +50,20 @@ for i in $backportingBranches; do
          \"base\":\"${i}\"
          }")
     pull_url=$(echo "$response" | jq .html_url | sed 's/\"//g')
+
     # Informing the user via PR comment that it failed
     echo `curl -X POST ${PR_URL} -H 'Content-Type: application/json' \
     -H "Authorization: Bearer ${ACCESS_TOKEN}" \
     -d "{ 
-        \"body\" : \"Backporting attempted at ${COMMENTTIME} failed for branch $i!! \
-        Manual intervention required to resolve the conflicts. [Workflow]($workflowUrl) [Link to backporting PR]($pull_url) \"
+        \"body\" : \"Backporting attempted at ${COMMENTTIME} failed for branch $i!! [Workflow]($workflowUrl)\
+        Manual intervention required to resolve the conflicts\
+        [Check new PR]($pull_url) \"
         }"`
+
     else #success scenario
     echo "--------Push the branch to upstream-------------"
     git push origin $autobranch
+    
     # Creating PR now
     echo "---------Creating PR----------------"
     res=$(curl -X POST https://api.github.com/repos/${NAME}/pulls \
@@ -77,8 +82,9 @@ for i in $backportingBranches; do
     echo `curl -X POST ${PR_URL} -H 'Content-Type: application/json' \
     -H "Authorization: Bearer ${ACCESS_TOKEN}" \
     -d "{ 
-        \"body\" : \"Backporting attempted at ${COMMENTTIME} successful for branch $i \
-        [Workflow]($workflowUrl) [Link to backporting PR]($new_pr)\" 
+        \"body\" : \"Backporting attempted at ${COMMENTTIME} successful for branch $i\
+        [Workflow]($workflowUrl)\
+        [Check new PR]($new_pr)\" 
         }"`
 
     fi
