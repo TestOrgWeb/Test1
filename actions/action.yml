@@ -5,7 +5,7 @@ inputs:
     description: Repo name
     required: true
   
-  pr_url:
+  comment_url:
     description: PR comment URL
     required: true
 
@@ -33,5 +33,5 @@ runs:
     ACCESS_TOKEN: ${{inputs.access_token}}
     BRANCH: ${{inputs.branches}}
     COMMIT_SHA: ${{inputs.commitSha}}
-    PR_URL: ${{inputs.pr_url}}
+    COMMENT_URL: ${{inputs.comment_url}}
     COMMENTTIME: ${{inputs.commentTime}}
