@@ -21,7 +21,9 @@ echo $backportingBranches
 
 echo "----------------Backporting now----------------"
 for i in $backportingBranches; do
+    echo "##############################################"
     echo "Current branch in process: ${i} "
+    echo "##############################################"
     git checkout ${i}
 
     echo "--------creating a temp autobackport branch for raising PR-------------"
@@ -44,8 +46,8 @@ for i in $backportingBranches; do
     -H 'Content-Type: application/json' \
     -H "Authorization: Bearer ${ACCESS_TOKEN}" \
     -d "{
-         \"title\":\"Backporting PR with conflicts\", 
-         \"body\":\"This PR has merge conflicts. Please refer to the files changed tab, resolve and then merge\", 
+         \"title\":\"Backporting PR ${COMMIT_SHA} with merge conflicts\", 
+         \"body\":\"This PR has merge conflicts. Please refer to the files changed tab, resolve and then merge \", 
          \"head\":\"$autobranch\",
          \"base\":\"${i}\"
          }")
@@ -70,7 +72,7 @@ for i in $backportingBranches; do
     -H 'Content-Type: application/json' \
     -H "Authorization: Bearer ${ACCESS_TOKEN}" \
     -d "{
-         \"title\":\"Backporting PR\", 
+         \"title\":\"Backporting PR for ${COMMIT_SHA}\", 
          \"body\":\"Backporting the changes to previous version\", 
          \"head\":\"$autobranch\",
          \"base\":\"${i}\"
