@@ -35,10 +35,6 @@ You can go ahead and resolve that before merging or you can close the PR. It’s
 
 **Important**: Delete the auto-created branch after merging or closing the PR.
 
-## Example
-
-![image](https://user-images.githubusercontent.com/61760125/80044348-1129f500-84b9-11ea-8562-8c29d328dbc8.png)
-
 Refer [quip](https://quip-amazon.com/XHzKAYtgb89Y/GitHub-Backport) for more details
 
 
