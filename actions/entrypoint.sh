@@ -46,7 +46,7 @@ for i in $backportingBranches; do
     -H 'Content-Type: application/json' \
     -H "Authorization: Bearer ${ACCESS_TOKEN}" \
     -d "{
-         \"title\":\"Backporting PR ${COMMIT_SHA} with merge conflicts\", 
+         \"title\":\"Backporting PR for ${i} with merge conflicts\", 
          \"body\":\"This PR has merge conflicts. Please refer to the files changed tab, resolve and then merge \", 
          \"head\":\"$autobranch\",
          \"base\":\"${i}\"
@@ -72,7 +72,7 @@ for i in $backportingBranches; do
     -H 'Content-Type: application/json' \
     -H "Authorization: Bearer ${ACCESS_TOKEN}" \
     -d "{
-         \"title\":\"Backporting PR for ${COMMIT_SHA}\", 
+         \"title\":\"Backporting PR for ${i}\", 
          \"body\":\"Backporting the changes to previous version\", 
          \"head\":\"$autobranch\",
          \"base\":\"${i}\"
