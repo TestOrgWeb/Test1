@@ -28,12 +28,12 @@ Result of the back-porting attempt will be posted on the same PR where made the 
 
 ## Conclusion
 
-You will get either of the below two:
-1. *_Back-porting is successful_*: In this case the cherry-pick is successful and no merge conflicts were faced. You are free to go and merge the changes to the intended branch. 
-2. *_Back-porting failed_*: In this case, the cherry-pick attempt failed due to merge conflicts. However to ease the process, a new PR will be raised along with the merge conflicts and additional data from git (eg: <<<<<<<head).
+You will get either of the result:
+1. ***Back-porting is successful***: In this case the cherry-pick is successful and no merge conflicts were faced. You are free to go and merge the changes to the intended branch. 
+2. ***Back-porting failed***: In this case, the cherry-pick attempt failed due to merge conflicts. However to ease the process, a new PR will be raised along with the merge conflicts and additional data from git (eg: <<<<<<<head).
 You can go ahead and resolve that before merging or you can close the PR. It’s your decision.
 
-*Important*: Delete the auto-created branch after merging or closing the PR.
+**Important**: Delete the auto-created branch after merging or closing the PR.
 
 Refer [quip](https://quip-amazon.com/XHzKAYtgb89Y/GitHub-Backport) for more details
 
