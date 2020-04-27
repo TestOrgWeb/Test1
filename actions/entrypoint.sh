@@ -59,7 +59,7 @@ for i in $backportingBranches; do
     -d "{ 
         \"body\" : \"Backporting attempted at ${COMMENTTIME} ***FAILED*** for branch $i!! Manual intervention required to resolve the conflicts\n\
         - [Check Workflow]($workflowUrl)\n\
-        - [Check new PR]($pull_url) \"
+        - [Check new PR with conficts]($pull_url) \"
         }"`
 
     else #success scenario
