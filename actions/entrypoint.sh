@@ -20,11 +20,10 @@ echo "------------Branch/es where changes are to be backported-----------"
 echo $backportingBranches
 
 #Getting all the commits from the PR
-
 echo "-------The commits on PR--------"
 commits=$(curl $PR)
-allcommits=`echo $commits | jq -r '.merge_commit_sha'`
-echo $allcommits
+commit_sha=`echo $commits | jq -r '.merge_commit_sha'`
+echo $commit_sha
 
 echo "----------------Backporting now----------------"
 for i in $backportingBranches; do
@@ -39,7 +38,7 @@ for i in $backportingBranches; do
     git checkout -b $autobranch origin/${i}
 
     echo "----------Cherry picking the commits from PR-------------------"
-    git cherry-pick -x $allcommits
+    git cherry-pick $commit_sha
     if [ `echo $?` -ne 0 ] #failure scenario
     then
     git add .
