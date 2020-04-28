@@ -22,7 +22,7 @@ echo $backportingBranches
 #Getting all the commits from the PR
 
 echo "-------The commits on PR--------"
-curl $PR/commits > commits.json
+commits.json=$(curl $PR/commits)
 cat commits.json | jq -r '.[].sha'
 
 # echo "----------------Backporting now----------------"
