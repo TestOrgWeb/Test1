@@ -24,6 +24,7 @@ echo $backportingBranches
 echo "-------The commits on PR--------"
 commits=$(curl $PR/commits)
 allcommits=`echo $commits | jq -r '.[].sha'`
+echo $allcommits
 
 echo "----------------Backporting now----------------"
 for i in $backportingBranches; do
@@ -39,7 +40,7 @@ for i in $backportingBranches; do
 
     echo "----------Cherry picking the commits from PR-------------------"
     for j in $allcommits; do
-        git cherry-pick ${COMMIT_SHA}
+        git cherry-pick $j
     done
     if [ `echo $?` -ne 0 ] #failure scenario
     then
@@ -55,7 +56,7 @@ for i in $backportingBranches; do
     -H "Authorization: Bearer ${ACCESS_TOKEN}" \
     -d "{
          \"title\":\"Backporting PR for ${i} with merge conflicts\", 
-         \"body\":\"This PR has merge conflicts. Please refer to the files changed tab, resolve and then merge \", 
+         \"body\":\"This PR has merge conflicts. Please refer to the files changed tab, resolve and then merge\", 
          \"head\":\"$autobranch\",
          \"base\":\"${i}\"
          }")
