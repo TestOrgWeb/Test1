@@ -4,14 +4,10 @@ jobs:
   Backport:
     runs-on: ubuntu-latest
     steps:
-    - name: Getting the details from the comment
+    - name: Getting the from the comment
       run: |
         branch=$(echo ${{github.event.client_payload.comment.body}} | cut -d ' ' -f 3)
         echo ::set-env name=branchName::$branch
-        curl ${{github.event.client_payload.issue.pull_request.url}} > sha.json
-        sha="`cat sha.json | grep -F -m1 '"sha":' | cut -d : -f 2 |  sed 's/[^a-zA-Z0-9]//g'`"
-        echo "the commit sha is--------------- $sha"
-        echo ::set-env name=commitsha::$sha
         echo ::set-env name=time::${{github.event.client_payload.comment.created_at}}
 
     - name: Checking out repo
@@ -27,6 +23,7 @@ jobs:
       uses: TestOrgWeb/infra/actions@master
       with:
         repoName: ${{github.event.client_payload.repository.full_name}}
+        PR: ${{github.event.client_payload.issue.pull_request.url}}
         comment_url: ${{github.event.client_payload.issue.comments_url}}
         access_token: ${{ secrets.MY_PAT }}
         branches: ${{ env.branchName}}

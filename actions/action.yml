@@ -5,6 +5,9 @@ inputs:
     description: Repo name
     required: true
   
+  PR :
+    description: PR url
+  
   comment_url:
     description: PR comment URL
     required: true
@@ -18,7 +21,7 @@ inputs:
     required: true
 
   commitSha:
-    description: Commit sha to be cheery picked
+    description: Commit sha to be cherry picked
     required: true
 
   commentTime:
@@ -35,3 +38,4 @@ runs:
     COMMIT_SHA: ${{inputs.commitSha}}
     COMMENT_URL: ${{inputs.comment_url}}
     COMMENTTIME: ${{inputs.commentTime}}
+    PR: ${{inputs.PR}}
