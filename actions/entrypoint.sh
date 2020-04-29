@@ -25,6 +25,11 @@ data=$(curl $PR)
 commit_sha=`echo $data | jq -r '.merge_commit_sha'`
 echo "Merge commit : $commit_sha"
 
+# #Serially applying the commits
+# data=$(curl $PR/commits)
+# commit_sha=`echo $data | jq -r '.[].sha'`
+# echo $commit_sha
+
 echo "----------------Backporting now----------------"
 for i in $backportingBranches; do
     echo "##############################################"
@@ -38,7 +43,9 @@ for i in $backportingBranches; do
     git checkout -b $autobranch origin/${i}
 
     echo "----------Cherry picking the commits from PR-------------------"
-    git cherry-pick $commit_sha
+    for j in commit_sha; do
+        git cherry-pick $commit_sha
+    done
     if [ `echo $?` -ne 0 ] #failure scenario
     then
     git add .
