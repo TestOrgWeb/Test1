@@ -20,10 +20,6 @@ inputs:
     description: Branches you want to backport to
     required: true
 
-  commitSha:
-    description: Commit sha to be cherry picked
-    required: true
-
   commentTime:
     description: Time at which comment was made
 
@@ -35,7 +31,6 @@ runs:
     NAME: ${{ inputs.repoName }}
     ACCESS_TOKEN: ${{inputs.access_token}}
     BRANCH: ${{inputs.branches}}
-    COMMIT_SHA: ${{inputs.commitSha}}
     COMMENT_URL: ${{inputs.comment_url}}
     COMMENTTIME: ${{inputs.commentTime}}
     PR: ${{inputs.PR}}

@@ -8,7 +8,6 @@ jobs:
       run: |
         branch=$(echo ${{github.event.client_payload.comment.body}} | cut -d ' ' -f 3)
         echo ::set-env name=branchName::$branch
-        echo ::set-env name=time::${{github.event.client_payload.comment.created_at}}
 
     - name: Checking out repo
       if: github.event.action == 'issue_comment'
@@ -27,7 +26,6 @@ jobs:
         comment_url: ${{github.event.client_payload.issue.comments_url}}
         access_token: ${{ secrets.MY_PAT }}
         branches: ${{ env.branchName}}
-        commitSha: ${{env.commitsha}}
-        commentTime: ${{env.time}}
+        commentTime: ${{github.event.client_payload.comment.created_at}}
 
 

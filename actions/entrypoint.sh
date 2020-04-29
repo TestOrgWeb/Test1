@@ -19,11 +19,11 @@ rm regex
 echo "------------Branch/es where changes are to be backported-----------"
 echo $backportingBranches
 
-#Getting all the commits from the PR
-echo "-------The commits on PR--------"
-commits=$(curl $PR)
-commit_sha=`echo $commits | jq -r '.merge_commit_sha'`
-echo $commit_sha
+#Getting the merge commit 
+echo "-------The merged commit--------"
+data=$(curl $PR)
+commit_sha=`echo $data | jq -r '.merge_commit_sha'`
+echo "Merge commit : $commit_sha"
 
 echo "----------------Backporting now----------------"
 for i in $backportingBranches; do
