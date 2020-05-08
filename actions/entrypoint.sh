@@ -23,7 +23,8 @@ echo $backportingBranches
 echo "-------The merged commit--------"
 data=$(curl $PR)
 state=`echo $data | jq .state`
-if state=="closed" then
+if [ state=="closed" ] 
+then
 commit_sha=`echo $data | jq -r '.merge_commit_sha'`
 echo "Merge commit : $commit_sha"
 else
