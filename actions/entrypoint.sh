@@ -24,6 +24,7 @@ echo "-------The merged commit--------"
 echo $PR
 data=$(curl $PR)
 state=`echo $data | jq .state`
+echo $state
 if [ $state=="closed" ] 
 then
 commit_sha=`echo $data | jq -r '.merge_commit_sha'`
