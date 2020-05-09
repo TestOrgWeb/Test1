@@ -1,5 +1,7 @@
 name: Webhook Example
-on: repository_dispatch
+on: 
+  repository_dispatch:
+    types: [backport]
 jobs:
   Backport:
     runs-on: ubuntu-latest
@@ -10,8 +12,7 @@ jobs:
         echo ::set-env name=branchName::$branch
 
     - name: Checking out repo
-      if: github.event.action == 'issue_comment'
-      uses: actions/checkout@v2
+      uses: actions/checkout@v1
       with:
         token: ${{ secrets.MY_PAT }}
         repository: ${{github.event.client_payload.repository.full_name}}
